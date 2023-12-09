@@ -69,8 +69,35 @@ const getAllFileBuku = async (req, res) => {
   }
 };
 
+const deleteFileBuku = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Pastikan id tersedia
+    if (!id) {
+      return res.status(400).json({ error: 'ID harus diisi' });
+    }
+
+    // Hapus file buku berdasarkan id
+    const deletedFileBuku = await fileBuku.destroy({
+      where: { id },
+    });
+
+    // Periksa apakah file buku dengan id tersebut ditemukan
+    if (!deletedFileBuku) {
+      return res.status(404).json({ error: 'File buku tidak ditemukan' });
+    }
+
+    return res.status(200).json({ message: 'File buku berhasil dihapus' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   createFileBuku,
   updateFileBuku,
-  getAllFileBuku
+  getAllFileBuku,
+  deleteFileBuku
 };

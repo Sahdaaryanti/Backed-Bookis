@@ -1,0 +1,21 @@
+[
+  "20231110131102-create-user.js",
+  "20231110131103-create-detail-user.js",
+  "20231110131104-create-user-payment.js",
+  "20231110185525-create-penulis.js",
+  "20231110185526-create-penerbit.js",
+  "20231110185527-create-kategori.js",
+  "20231110185528-create-buku.js",
+  "20231110193721-create-gudang.js",
+  "20231110193801-create-file-buku.js",
+  "20231110194208-create-detail-pesanan.js",
+  "20231110194252-create-pesanan-item.js",
+  "20231110194850-create-retur-pesanan.js",
+  "20231110194952-create-file-retur-pesanan.js",
+  "20231110195133-create-ulasan-buku.js",
+  "20231110195217-create-file-ulasan-buku.js",
+  "20231110195302-create-komentar-ulasan-buku.js",
+  "20231111050725-create-pesanan-payment.js",
+  "20231124122801-create-shopping-session.js",
+  "20231124122916-create-cart.js"
+]

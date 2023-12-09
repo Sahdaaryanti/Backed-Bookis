@@ -4,7 +4,8 @@
       "password": "postgres",
       "database": "bookish",
       "host": "127.0.0.1",
-      "dialect": "postgres"
+      "dialect": "postgres",
+      "migrationStoragePath": "sequelize-meta.json"
     },
     "test": {
       "username": "postgres",

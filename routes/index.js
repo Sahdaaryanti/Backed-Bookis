@@ -14,8 +14,9 @@ const penerbitRoute = require('./Penerbits');
 const penulisRoute = require('./Penulis');
 const ulasanBukuRoute = require('./ulasanBuku');
 const paymentBukuRoute = require('./userPayment');
+const pesananPaymentRoute = require('./pesananPayment');
 const riwayatPesananRoute = require('./riwayatPesanan');
-const cartRoutes = require('./cartRoutes')
+const cartRoutes = require('./cart')
 
 router.get('/', (req,res) => {
     res.render('index',{
@@ -35,7 +36,8 @@ router.use('/penerbit', penerbitRoute);
 router.use('/penulis', penulisRoute);
 router.use('/ulasanBuku', ulasanBukuRoute);
 router.use('/payment', paymentBukuRoute);
-router.use('/riwayat-pesanan',riwayatPesananRoute) 
-router.use('/routes', cartRoutes)
+router.use('/riwayat-pesanan',riwayatPesananRoute); 
+router.use('/users',pesananPaymentRoute) 
+router.use('/', cartRoutes);
 
 module.exports = router

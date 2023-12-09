@@ -151,7 +151,7 @@ const { detailPesanan, pesananItem, pesananPayment, Buku, User, detailUser, file
 exports.getAllRiwayatPesananMembers = async (req, res) => {
   try {
     
-    const userId = 1; //req.user.id; <-- diganti ini
+    const userId = req.user.id; //req.user.id; <-- diganti ini
 
 
     const riwayatPesanan = await detailPesanan.findAll({

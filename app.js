@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser. text({type: '/'}));
 // app.use(upload.single('urlFile'));
 
-app.use('/frontend/uploads', express.static(path.join(__dirname, 'frontend/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('views', path.join(__dirname,'views'))
 app.set('view engine', 'ejs')

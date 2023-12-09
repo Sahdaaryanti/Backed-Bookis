@@ -10,8 +10,9 @@ const pool = new Pool({
 
 require("dotenv").config();
 const midtransConfig = {
-  clientKey: "SB-Mid-client-1CHFlkgibw5_iOsq",
-  serverKey: "SB-Mid-server-VFMYXvWVa2vxkW9M7RUhgmrh",
+  isProduction: false,
+  serverKey: process.env.MIDTRANS_serverKey,
+  clientKey: process.env.MIDTRANS_clientKey,
 };
 
 pool.connect((err, client, done) => {

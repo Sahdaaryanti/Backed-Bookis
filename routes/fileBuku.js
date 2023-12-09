@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { createFileBuku, updateFileBuku, getAllFileBuku } = require('../controllers/fileBuku');
+const { createFileBuku, updateFileBuku, getAllFileBuku, deleteFileBuku } = require('../controllers/fileBuku');
 const upload = require("../middlewares/multer");
+const { authentication } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -35,7 +36,7 @@ const upload = require("../middlewares/multer");
  *       500:
  *         description: Internal Server Error
  */
-router.post('/', upload.single('urlFile'), createFileBuku);
+router.post('/',authentication, upload.single('urlFile'), createFileBuku);
 
 /**
  * @swagger
@@ -71,7 +72,7 @@ router.post('/', upload.single('urlFile'), createFileBuku);
  *       500:
  *         description: Internal Server Error
  */
-router.put('/:id',upload.single('urlFile'), updateFileBuku);
+router.put('/:id', authentication, upload.single('urlFile'), updateFileBuku);
 
 /**
  * @swagger
@@ -86,5 +87,30 @@ router.put('/:id',upload.single('urlFile'), updateFileBuku);
  *         description: Internal Server Error
  */
 router.get('/all', getAllFileBuku);
+
+/**
+ * @swagger
+ * /file-buku/{id}:
+ *   delete:
+ *     summary: Menghapus file buku berdasarkan ID
+ *     tags: [File Buku]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID file buku
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: File buku berhasil dihapus
+ *       400:
+ *         description: Bad Request
+ *       404:
+ *         description: File buku tidak ditemukan
+ *       500:
+ *         description: Internal Server Error
+ */
+router.delete('/:id',authentication, deleteFileBuku);
 
 module.exports = router;

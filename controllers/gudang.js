@@ -1,14 +1,26 @@
 // stockController.js
-const { Gudang, Buku } = require('../models'); 
+const { Gudang } = require('../models'); 
 // const {Buku } = require('../models/buku');
 
 // Get all stocks
+// const getAllStocks = async (req, res) => {
+//   try {
+//     const allStock = await Gudang.findAll();
+//     res.json(allStock);
+//     // const stocks = await Gudang.findAll({
+//     //   include: { model: Buku, as: 'bukus' },
+//     // });
+//     res.status(200).json({ status: 200, data: allStock });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ status: 500, message: 'Internal Server Error' });
+//   }
+// };
+
 const getAllStocks = async (req, res) => {
   try {
-    const stocks = await Gudang.findAll({
-      include: { model: Buku, as: 'bukus' },
-    });
-    res.status(200).json({ status: 200, data: stocks });
+    const allStock = await Gudang.findAll();
+    res.json(allStock);
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 500, message: 'Internal Server Error' });
