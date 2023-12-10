@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getAllPenerbit, getPenerbitById, createPenerbit, updatePenerbit, deletePenerbit } = require('../controllers/Penerbits');
-const { authentication } = require('../middlewares/auth');
+const { authentication, verifyRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -73,7 +73,7 @@ router.get('/:id', getPenerbitById);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/', authentication, createPenerbit);
+router.post('/', authentication,verifyRole(['admin']), createPenerbit);
 
 /**
  * @swagger
@@ -110,7 +110,7 @@ router.post('/', authentication, createPenerbit);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/:id', authentication, updatePenerbit);
+router.put('/:id', authentication,verifyRole(['admin']), updatePenerbit);
 
 /**
  * @swagger
@@ -137,6 +137,6 @@ router.put('/:id', authentication, updatePenerbit);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/:id', authentication, deletePenerbit);
+router.delete('/:id', authentication,verifyRole(['admin']), deletePenerbit);
 
 module.exports = router;

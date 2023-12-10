@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authentication, verifyRole } = require('../middlewares/auth'); // Assuming you have authentication middleware
+const { authentication, verifyRole } = require('../middlewares/auth'); 
 
 const {
   getAllStocks,

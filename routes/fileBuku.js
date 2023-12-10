@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { createFileBuku, updateFileBuku, getAllFileBuku, deleteFileBuku } = require('../controllers/fileBuku');
 const upload = require("../middlewares/multer");
-const { authentication } = require('../middlewares/auth');
+const { authentication, verifyRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -36,7 +36,7 @@ const { authentication } = require('../middlewares/auth');
  *       500:
  *         description: Internal Server Error
  */
-router.post('/',authentication, upload.single('urlFile'), createFileBuku);
+router.post('/',authentication, upload.single('urlFile'),verifyRole(['admin']), createFileBuku);
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.post('/',authentication, upload.single('urlFile'), createFileBuku);
  *       500:
  *         description: Internal Server Error
  */
-router.put('/:id', authentication, upload.single('urlFile'), updateFileBuku);
+router.put('/:id', authentication, upload.single('urlFile'),verifyRole(['admin']), updateFileBuku);
 
 /**
  * @swagger
@@ -111,6 +111,6 @@ router.get('/all', getAllFileBuku);
  *       500:
  *         description: Internal Server Error
  */
-router.delete('/:id',authentication, deleteFileBuku);
+router.delete('/:id',authentication,verifyRole(['admin']), deleteFileBuku);
 
 module.exports = router;

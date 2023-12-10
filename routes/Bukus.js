@@ -8,7 +8,7 @@ const { getAllBuku,
     getBukuByKategori,
     getBukuPopuler,
     getBukuTerbaru } = require('../controllers/Bukus');
-const { authentication } = require('../middlewares/auth');
+const { authentication, verifyRole } = require('../middlewares/auth'); 
 
 /**
  * @swagger
@@ -55,7 +55,7 @@ const { authentication } = require('../middlewares/auth');
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/', authentication, createBuku);
+router.post('/', authentication, verifyRole(['admin']) , createBuku);
 
 /**
  * @swagger
@@ -104,7 +104,7 @@ router.post('/', authentication, createBuku);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/:id', authentication, updateBuku);
+router.put('/:id', authentication,verifyRole(['admin']), updateBuku);
 
 /**
  * @swagger
@@ -131,7 +131,7 @@ router.put('/:id', authentication, updateBuku);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/:id', authentication, deleteBuku);
+router.delete('/:id', authentication,verifyRole(['admin']), deleteBuku);
 
 /**
  * @swagger

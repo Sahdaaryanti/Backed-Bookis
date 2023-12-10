@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getAllKategoris, getKategorisById, createKategoris, updateKategoris, deleteKategoris } = require('../controllers/Kategoris');
-const { authentication } = require('../middlewares/auth');
+const { authentication, verifyRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -75,7 +75,7 @@ router.get('/:id', getKategorisById);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/', authentication, createKategoris);
+router.post('/', authentication,verifyRole(['admin']), createKategoris);
 
 /**
  * @swagger
@@ -114,7 +114,7 @@ router.post('/', authentication, createKategoris);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/:id', authentication, updateKategoris);
+router.put('/:id', authentication,verifyRole(['admin']), updateKategoris);
 
 /**
  * @swagger
@@ -141,6 +141,6 @@ router.put('/:id', authentication, updateKategoris);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/:id', authentication, deleteKategoris);
+router.delete('/:id', authentication,verifyRole(['admin']), deleteKategoris);
 
 module.exports = router;

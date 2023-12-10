@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getAllPenulis, getPenulisById, createPenulis, updatePenulis, deletePenulis } = require('../controllers/Penulis');
-const { authentication } = require('../middlewares/auth');
+const { authentication, verifyRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -73,7 +73,7 @@ router.get('/:id', getPenulisById);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/', authentication, createPenulis);
+router.post('/', authentication,verifyRole(['admin']), createPenulis);
 
 /**
  * @swagger
@@ -110,7 +110,7 @@ router.post('/', authentication, createPenulis);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/:id', authentication, updatePenulis);
+router.put('/:id', authentication,verifyRole(['admin']), updatePenulis);
 
 /**
  * @swagger
@@ -137,6 +137,6 @@ router.put('/:id', authentication, updatePenulis);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/:id', authentication, deletePenulis);
+router.delete('/:id', authentication,verifyRole(['admin']), deletePenulis);
 
 module.exports = router;
