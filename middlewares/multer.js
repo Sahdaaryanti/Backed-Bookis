@@ -1,15 +1,12 @@
+middleware/multer
 const multer = require('multer');
+const imagekit = require('../config/imageKitConfig');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads'); // Ubah path destination menjadi './uploads'
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    },
+const storage = multer.memoryStorage();
+
+const upload = multer({
+    storage: storage,
 });
-
-const upload = multer({ storage: storage });
 
 module.exports = upload;
 

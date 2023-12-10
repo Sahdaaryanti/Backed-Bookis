@@ -1,14 +1,24 @@
+controllers
 const { fileBuku } = require('../models');
+const imagekit = require('../config/imageKitConfig');
 
 const createFileBuku = async (req, res) => {
   try {
     const { bukuId } = req.body;
-const urlFile = req.file ? req.file.path : undefined;
 
-    // Pastikan bukuId dan urlFile tersedia
-    if (!bukuId || !urlFile) {
-      return res.status(400).json({ error: 'BukuId dan urlFile harus diisi' });
+    // Pastikan bukuId dan req.file tersedia
+    if (!bukuId || !req.file) {
+      return res.status(400).json({ error: 'BukuId dan gambar harus diisi' });
     }
+
+    // Unggah gambar ke ImageKit
+    const result = await imagekit.upload({
+      file: req.file.buffer, // Buffer gambar dari Multer
+      fileName: `${Date.now()}-${req.file.originalname}`,
+    });
+
+    // Gunakan result.url untuk menyimpan URL ImageKit di database Anda
+    const urlFile = result.url;
 
     // Buat file buku baru
     const newFileBuku = await fileBuku.create({
@@ -27,12 +37,20 @@ const updateFileBuku = async (req, res) => {
   try {
     const { id } = req.params;
     const { bukuId } = req.body;
-    const urlFile = req.file ? req.file.path : undefined;
 
-    // Pastikan id, bukuId, dan urlFile tersedia
-    if (!id || !bukuId || !urlFile) {
-      return res.status(400).json({ error: 'ID, bukuId, dan urlFile harus diisi' });
+    // Pastikan id, bukuId, dan req.file tersedia
+    if (!id || !bukuId || !req.file) {
+      return res.status(400).json({ error: 'ID, bukuId, dan gambar harus diisi' });
     }
+
+    // Unggah gambar ke ImageKit
+    const result = await imagekit.upload({
+      file: req.file.buffer, // Buffer gambar dari Multer
+      fileName: `${Date.now()}-${req.file.originalname}`,
+    });
+
+    // Gunakan result.url untuk menyimpan URL ImageKit di database Anda
+    const urlFile = result.url;
 
     // Perbarui file buku berdasarkan id
     const updatedFileBuku = await fileBuku.update(
@@ -78,15 +96,28 @@ const deleteFileBuku = async (req, res) => {
       return res.status(400).json({ error: 'ID harus diisi' });
     }
 
-    // Hapus file buku berdasarkan id
-    const deletedFileBuku = await fileBuku.destroy({
-      where: { id },
-    });
+    // Ambil URL file dari database
+    const fileBukuData = await fileBuku.findByPk(id);
 
     // Periksa apakah file buku dengan id tersebut ditemukan
-    if (!deletedFileBuku) {
+    if (!fileBukuData) {
       return res.status(404).json({ error: 'File buku tidak ditemukan' });
     }
+
+    const { urlFile } = fileBukuData;
+
+    // Hapus file dari ImageKit
+    const deletionResult = await imagekit.deleteFile(urlFile);
+
+    // Periksa apakah penghapusan file dari ImageKit berhasil
+    if (deletionResult.http_code !== 200) {
+      return res.status(500).json({ error: 'Gagal menghapus file dari ImageKit' });
+    }
+
+    // Hapus file buku dari database berdasarkan id
+    await fileBuku.destroy({
+      where: { id },
+    });
 
     return res.status(200).json({ message: 'File buku berhasil dihapus' });
   } catch (error) {
