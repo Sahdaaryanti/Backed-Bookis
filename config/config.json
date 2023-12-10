@@ -7,17 +7,17 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "bookish",
-    "host": "127.0.0.1",
+    "username": "zxvppmbw",
+    "password": "xblCamqRZK1B5KbHVn1zuj28H7Wa-y4W",
+    "database": "zxvppmbw",
+    "host": "pom.db.elephantsql.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "bookish",
-    "host": "127.0.0.1",
+    "username": "zxvppmbw",
+    "password": "xblCamqRZK1B5KbHVn1zuj28H7Wa-y4W",
+    "database": "zxvppmbw",
+    "host": "pom.db.elephantsql.com",
     "dialect": "postgres"
   }
 }
