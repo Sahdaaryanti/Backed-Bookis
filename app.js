@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const express        = require('express')
-const expressLayouts = require('express-ejs-layouts')
+// const expressLayouts = require('express-ejs-layouts')
 const ejs            = require('ejs')
 const route          = require('./routes/index')
 const errorHandler   = require('./middlewares/errorHandling')
@@ -29,9 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.set('views', path.join(__dirname,'views'))
-app.set('view engine', 'ejs')
-app.use(expressLayouts)
+// app.set('views', path.join(__dirname,'views'))
+// app.set('view engine', 'ejs')
+// app.use(expressLayouts)
 
 const swaggerOptions = {
   swaggerDefinition: {
