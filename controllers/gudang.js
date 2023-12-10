@@ -1,4 +1,4 @@
-const { Gudang } = require('../models'); 
+const { Gudang } = require('../models');
 
 // Get all stocks
 const getAllStocks = async (req, res) => {
@@ -27,10 +27,10 @@ const addStock = async (req, res) => {
 const updateStock = async (req, res) => {
   const { gudangId } = req.params;
   const { stok } = req.body;
-  
+
   try {
     const stock = await Gudang.findByPk(gudangId);
-    
+
     if (!stock) {
       return res.status(404).json({ status: 404, message: 'Stock not found' });
     }
@@ -48,10 +48,10 @@ const updateStock = async (req, res) => {
 // Delete stock for a book
 const deleteStock = async (req, res) => {
   const { gudangId } = req.params;
-  
+
   try {
     const stock = await Gudang.findByPk(gudangId);
-    
+
     if (!stock) {
       return res.status(404).json({ status: 404, message: 'Stock not found' });
     }
