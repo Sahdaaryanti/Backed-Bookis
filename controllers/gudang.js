@@ -7,7 +7,9 @@ const getAllStocks = async (req, res) => {
     res.json(allStock);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ status: 500, message: 'Internal Server Error' });
+    if (!res.headersSent) {
+      res.status(500).json({ status: 500, message: 'Internal Server Error' });
+    }
   }
 };
 
