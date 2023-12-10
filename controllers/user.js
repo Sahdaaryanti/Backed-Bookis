@@ -1,4 +1,3 @@
-const pool = require('../config/config.json')['development'];
 const { User } = require('../models');
 const { tokenSign } = require('../helpers/jwt');
 const { tokenVerifier } = require('../helpers/jwt');
