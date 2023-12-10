@@ -1,4 +1,3 @@
-middleware/multer
 const multer = require('multer');
 const imagekit = require('../config/imageKitConfig');
 
