@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { getAllUlasan, createUlasan } = require('../controllers/UlasanBuku');
+const { getAllUlasan, createUlasan } = require('../controllers/ulasanBuku');
 
 /**
  * @swagger
