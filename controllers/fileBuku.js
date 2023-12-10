@@ -1,4 +1,3 @@
-controllers
 const { fileBuku } = require('../models');
 const imagekit = require('../config/imageKitConfig');
 
