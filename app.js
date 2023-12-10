@@ -16,7 +16,7 @@ const swaggerUI      = require('swagger-ui-express');
 const routes         = require("./routes/index")
 
 const corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: ['http://localhost:3001', 'https://frontend-bookis.vercel.app'],
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
