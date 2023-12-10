@@ -18,12 +18,11 @@ const pesananPaymentRoute = require('./pesananPayment');
 const riwayatPesananRoute = require('./riwayatPesanan');
 const cartRoutes = require('./cart')
 
-router.get('/', (req,res) => {
-    res.render('index',{
-        title : 'Index',
-        layout : 'layouts/main-layout'
-    })
-})
+router.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the API' });
+});
+
+
 router.use('/user', userRoute);
 // router.use('/my-account', userRoute)
 router.use('/detail-user', detailUserRoute);
