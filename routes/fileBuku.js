@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { createFileBuku, updateFileBuku, getAllFileBuku, deleteFileBuku } = require('../controllers/fileBuku');
+const { createFileBuku, updateFileBuku, getAllFileBuku } = require('../controllers/fileBuku');
+const {verifyRole} = require('../middlewares/auth')
 const upload = require("../middlewares/multer");
-const { authentication, verifyRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -36,7 +36,7 @@ const { authentication, verifyRole } = require('../middlewares/auth');
  *       500:
  *         description: Internal Server Error
  */
-router.post('/',authentication, upload.single('urlFile'),verifyRole(['admin']), createFileBuku);
+router.post('/',verifyRole(['admin']), upload.single('urlFile'), createFileBuku);
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.post('/',authentication, upload.single('urlFile'),verifyRole(['admin']), 
  *       500:
  *         description: Internal Server Error
  */
-router.put('/:id', authentication, upload.single('urlFile'),verifyRole(['admin']), updateFileBuku);
+router.put('/:id',upload.single('urlFile'), updateFileBuku);
 
 /**
  * @swagger
@@ -87,30 +87,5 @@ router.put('/:id', authentication, upload.single('urlFile'),verifyRole(['admin']
  *         description: Internal Server Error
  */
 router.get('/all', getAllFileBuku);
-
-/**
- * @swagger
- * /file-buku/{id}:
- *   delete:
- *     summary: Menghapus file buku berdasarkan ID
- *     tags: [File Buku]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID file buku
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: File buku berhasil dihapus
- *       400:
- *         description: Bad Request
- *       404:
- *         description: File buku tidak ditemukan
- *       500:
- *         description: Internal Server Error
- */
-router.delete('/:id',authentication,verifyRole(['admin']), deleteFileBuku);
 
 module.exports = router;

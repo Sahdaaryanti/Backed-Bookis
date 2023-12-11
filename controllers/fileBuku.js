@@ -86,48 +86,8 @@ const getAllFileBuku = async (req, res) => {
   }
 };
 
-const deleteFileBuku = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Pastikan id tersedia
-    if (!id) {
-      return res.status(400).json({ error: 'ID harus diisi' });
-    }
-
-    // Ambil URL file dari database
-    const fileBukuData = await fileBuku.findByPk(id);
-
-    // Periksa apakah file buku dengan id tersebut ditemukan
-    if (!fileBukuData) {
-      return res.status(404).json({ error: 'File buku tidak ditemukan' });
-    }
-
-    const { urlFile } = fileBukuData;
-
-    // Hapus file dari ImageKit
-    const deletionResult = await imagekit.deleteFile(urlFile);
-
-    // Periksa apakah penghapusan file dari ImageKit berhasil
-    if (deletionResult.http_code !== 200) {
-      return res.status(500).json({ error: 'Gagal menghapus file dari ImageKit' });
-    }
-
-    // Hapus file buku dari database berdasarkan id
-    await fileBuku.destroy({
-      where: { id },
-    });
-
-    return res.status(200).json({ message: 'File buku berhasil dihapus' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
-
 module.exports = {
   createFileBuku,
   updateFileBuku,
-  getAllFileBuku,
-  deleteFileBuku
+  getAllFileBuku
 };
