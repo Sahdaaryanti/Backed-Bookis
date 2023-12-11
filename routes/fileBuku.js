@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createFileBuku, updateFileBuku, getAllFileBuku } = require('../controllers/fileBuku');
-const {verifyRole} = require('../middlewares/auth')
+const {authentication, verifyRole} = require('../middlewares/auth')
 const upload = require("../middlewares/multer");
 
 /**
@@ -36,7 +36,7 @@ const upload = require("../middlewares/multer");
  *       500:
  *         description: Internal Server Error
  */
-router.post('/',verifyRole(['admin']), upload.single('urlFile'), createFileBuku);
+router.post('/',authentication, verifyRole(['admin']), upload.single('urlFile'), createFileBuku);
 
 /**
  * @swagger
