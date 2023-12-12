@@ -37,6 +37,6 @@ router.use('/ulasanBuku', ulasanBukuRoute);
 router.use('/payment', paymentBukuRoute);
 router.use('/riwayat-pesanan',riwayatPesananRoute); 
 router.use('/users',pesananPaymentRoute) 
-router.use('/', cartRoutes);
+router.use('/cart', cartRoute)
 
 module.exports = router

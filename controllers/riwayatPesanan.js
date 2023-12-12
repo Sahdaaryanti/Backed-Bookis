@@ -146,30 +146,44 @@
 
 
 
-const { detailPesanan, pesananItem, pesananPayment, Buku, User, detailUser, fileBuku } = require('../models');
+const { response } = require('express');
+const { detailPesanan, pesananItem, pesananPayment, Buku, User, detailUser,userPayment, fileBuku } = require('../models');
+const Snap = require('midtrans-client').Snap;
+const snap = new Snap({
+  isProduction: false, // Set to true for production
+  clientKey : "SB-Mid-client-1CHFlkgibw5_iOsq",
+  serverKey:  "SB-Mid-server-VFMYXvWVa2vxkW9M7RUhgmrh",
+});
 
 exports.getAllRiwayatPesananMembers = async (req, res) => {
   try {
     
-    const userId = req.user.id; //req.user.id; <-- diganti ini
+    const userId = req.user.userId
 
 
-    const riwayatPesanan = await detailPesanan.findAll({
-      where: { userId: userId }, 
-      include: [
-        { 
-          model: pesananItem, 
-          as: 'pesananItems',
-          include: [{ 
-            model: Buku, 
-            as: 'bukus', 
-            include: [{ model: fileBuku, as: 'fileBukus' }],
-          }],
-        },
-      ],
-    });
+    // const riwayatPesanan = await detailPesanan.findAll({
+    //   where: { userId: userId }, 
+    //   include: [
+    //     { 
+    //       model: pesananItem, 
+    //       as: 'pesananItems',
+    //       include: [{ 
+    //         model: Buku, 
+    //         as: 'bukus', 
+    //         include: [{ model: fileBuku, as: 'fileBukus' }],
+    //       },
+          
+    //     ],
+    //     },
+    //   ],
+    // });
 
-    res.json(riwayatPesanan);
+    const data = await userPayment.findAll({
+      where : {detailUserId : userId},
+    })
+
+
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
   }

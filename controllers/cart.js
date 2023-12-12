@@ -1,56 +1,101 @@
-const { cart } = require('../models');
+const { Cart, Buku } = require('../models');
 
-// Create
-const createCartItem = async (req, res) => {
+// Get Cart Items
+const getCart = async (req, res) => {
   try {
-    const newCartItem = await cart.create(req.body);
-    res.json(newCartItem);
+    const userId = req.user.userId; // Assuming userId is stored in the user object after authentication
+    const cartItems = await Cart.findAll({
+      where: { userid : userId },
+      include: [{ model: Buku, as: 'bukus' }],
+    });
+    res.json({ status: 200, data: cartItems });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ status: 500, message: 'Internal Server Error' });
   }
 };
 
-// Read
-const getCartItemById = async (req, res) => {
+// Add Item to Cart
+const addToCart = async (req, res) => {
   try {
-    const cartItemData = await cart.findByPk(req.params.id);
-    res.json(cartItemData);
+    const userId = req.user.userId;
+    const { bukuId, jumlah } = req.body;
+    
+    // Check if the book exists
+    const book = await Buku.findByPk(bukuId);
+    if (!book) {
+      return res.status(404).json({ status: 404, message: 'Book not found' });
+    }
+
+    // Create or update the cart item
+    let cartItem = await Cart.findOne({ where: { userid:userId, bukuid:bukuId } });
+    if (cartItem) {
+      cartItem.jumlah += jumlah;
+      await cartItem.save();
+    } else {
+      cartItem = await Cart.create({ userid :userId, bukuid:book.id, jumlah });
+    }
+
+    res.json({ status: 200, data: cartItem });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ status: 500, message: 'Internal Server Error' });
   }
 };
 
-// Update
+// Update Cart Item
 const updateCartItem = async (req, res) => {
   try {
-    const updatedCartItem = await cart.update(req.body, {
-      where: { id: req.params.id },
-    });
-    res.json(updatedCartItem);
+    const cartId = req.params.cartId;
+    const { jumlah } = req.body;
+
+    const cartItem = await Cart.findByPk(cartId);
+    if (!cartItem) {
+      return res.status(404).json({ status: 404, message: 'Cart item not found' });
+    }
+
+    cartItem.jumlah = jumlah;
+    await cartItem.save();
+
+    res.json({ status: 200, data: cartItem });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ status: 500, message: 'Internal Server Error' });
   }
 };
 
-// Delete
-const deleteCartItem = async (req, res) => {
+// Remove Item from Cart
+const removeCartItem = async (req, res) => {
   try {
-    await cart.destroy({
-      where: { id: req.params.id },
-    });
-    res.json({ message: 'Cart Item deleted successfully' });
+    const cartId = req.params.cartId;
+
+    const cartItem = await Cart.findByPk(cartId);
+    if (!cartItem) {
+      return res.status(404).json({ status: 404, message: 'Cart item not found' });
+    }
+
+    await cartItem.destroy();
+
+    res.json({ status: 200, message: 'Cart item removed successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ status: 500, message: 'Internal Server Error' });
   }
 };
+
+
+const removeManyCart = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    // const da
+  } catch (error) {
+    
+  }
+}
 
 module.exports = {
-  createCartItem,
-  getCartItemById,
+  getCart,
+  addToCart,
   updateCartItem,
-  deleteCartItem
-}
+  removeCartItem,
+};

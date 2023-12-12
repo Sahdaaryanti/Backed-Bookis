@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
 
   userPayment.init(
     {
-      detailUserId: DataTypes.INTEGER,
+      detailUserId: DataTypes.CHAR(),
       provider: DataTypes.STRING,
       noPayment: DataTypes.CHAR(25),
     },
