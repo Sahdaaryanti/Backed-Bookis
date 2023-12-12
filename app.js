@@ -20,6 +20,7 @@ const corsOptions = {
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
+
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
