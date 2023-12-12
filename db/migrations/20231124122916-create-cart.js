@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sessionId: {
+      userid: {
         type: Sequelize.INTEGER,
         references : {
-          model : 'shopping_sessions',
+          model : 'Users',
           key : 'id'
         }
       },
-      bukuId: {
+      bukuid: {
         type: Sequelize.INTEGER,
         references : {
           model : 'Bukus',
@@ -26,11 +26,11 @@ module.exports = {
       jumlah: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      createdAt: { // Change here
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updatedAt: { // Change here
         allowNull: false,
         type: Sequelize.DATE
       }
