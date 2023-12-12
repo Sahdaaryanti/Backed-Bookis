@@ -15,12 +15,15 @@ const swaggerJsDoc   = require('swagger-jsdoc');
 const swaggerUI      = require('swagger-ui-express');
 const routes         = require("./routes/index")
 
+
 const corsOptions = {
   origin: ['http://localhost:3001', 'https://frontend-bookis.vercel.app', 'https://frontend-bookish-admin.vercel.app'],
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 app.use(cors(corsOptions));
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
